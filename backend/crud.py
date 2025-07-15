@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from . import models
+import models
 
 def get_record_by_path(db: Session, file_path: str):
     return db.query(models.MedicalRecord).filter(models.MedicalRecord.file_path == file_path).first()

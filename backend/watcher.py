@@ -6,8 +6,9 @@ from sqlalchemy.orm import Session
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 
-from . import crud, models
-from .utils.file_parser import parse_file_name
+import crud
+import models
+from utils.file_parser import parse_file_name
 
 # 데이터베이스 세션 설정 (실제 앱에서는 FastAPI의 의존성 주입을 통해 관리)
 from sqlalchemy import create_engine

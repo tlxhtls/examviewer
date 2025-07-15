@@ -73,8 +73,10 @@
   ```bash
   # 프로젝트 루트에서 실행
   npm install
-  # 백엔드 의존성 설치
-  cd backend && uv pip install -r requirements.txt
+  # 백엔드 의존성 설치 (uv 사용)
+  cd backend && uv pip install -r requirements.txt 
+  # 또는 pyproject.toml 기반으로 설치
+  # cd backend && uv pip install .
   ```
 
 - **개발 서버 실행**:
@@ -83,6 +85,27 @@
   # 백엔드, 프론트엔드, Electron 동시 실행
   npm run dev
   ```
+
+- **롱-러닝(Long-running) 프로세스 실행 및 테스트 가이드 (중요!)**:
+  - **문제점**: `watcher.py`나 `uvicorn` 같은 서버/감시 프로세스는 종료되지 않고 계속 실행됩니다. 이를 직접 실행하면 터미널이 멈춘 것처럼 보입니다.
+  - **해결책**:
+    1.  **백그라운드 실행 및 종료**: 기능 확인을 위해 짧은 시간 동안만 프로세스를 실행해야 할 경우, 백그라운드(`&`)로 실행하고 일정 시간 후 `kill` 명령으로 종료합니다.
+        ```bash
+        # 예시: watcher.py를 5초간 실행하여 초기 스캔 테스트
+        cd backend
+        ./.venv/bin/python watcher.py & PID=$! && sleep 5 && kill $PID
+        ```
+    2.  **기능별 테스트**: API 엔드포인트와 같이 특정 기능을 테스트할 때는, 서버를 계속 실행할 필요 없이 `curl`이나 `wget` 같은 도구를 사용하여 HTTP 요청을 보내고 응답을 확인합니다.
+        ```bash
+        # 예시: /api/search 엔드포인트 테스트
+        # 1. uvicorn 서버를 백그라운드에서 실행
+        cd backend
+        uvicorn main:app --reload &
+        # 2. curl로 API 호출
+        curl "http://127.0.0.1:8000/api/search?q=김민준"
+        # 3. 테스트 후 서버 프로세스 종료
+        kill %1 
+        ```
 
 - **테스트**:
   ```bash
