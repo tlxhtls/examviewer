@@ -1,6 +1,8 @@
 [project]
-name = "exam-viewer-backend"
+name = "backend"
 version = "0.1.0"
+description = "Add your description here"
+requires-python = ">=3.11"
 dependencies = [
     "docx2pdf>=0.1.8",
     "fastapi>=0.116.1",
@@ -11,4 +13,13 @@ dependencies = [
     "sqlalchemy>=2.0.41",
     "uvicorn>=0.35.0",
     "watchdog>=6.0.0",
+]
+
+[dependency-groups]
+dev = [
+    "black>=25.1.0",
+    "isort>=6.0.1",
+    "mypy>=1.17.0",
+    "pytest>=8.4.1",
+    "pytest-asyncio>=1.0.0",
 ]
