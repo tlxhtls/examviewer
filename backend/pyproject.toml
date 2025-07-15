@@ -1,3 +1,14 @@
 [project]
 name = "exam-viewer-backend"
 version = "0.1.0"
+dependencies = [
+    "docx2pdf>=0.1.8",
+    "fastapi>=0.116.1",
+    "pillow>=11.3.0",
+    "pymupdf>=1.26.3",
+    "python-multipart>=0.0.20",
+    "reportlab>=4.4.2",
+    "sqlalchemy>=2.0.41",
+    "uvicorn>=0.35.0",
+    "watchdog>=6.0.0",
+]
